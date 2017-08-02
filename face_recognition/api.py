@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
+from io import BytesIO
 import scipy.misc
 import dlib
 import numpy as np
+import requests
 
 try:
     import face_recognition_models
@@ -76,6 +78,19 @@ def load_image_file(filename, mode='RGB'):
     :return: image contents as numpy array
     """
     return scipy.misc.imread(filename, mode=mode)
+
+
+def load_image_url(url, mode='RGB'):
+    """
+
+    :param url:
+    :param mode:
+    :return:
+    """
+    r = requests.get(url)
+    img = BytesIO(r.content)
+
+    return scipy.misc.imread(img, mode=mode)
 
 
 def _raw_face_locations(img, number_of_times_to_upsample=1):
